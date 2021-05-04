@@ -283,7 +283,7 @@ client.on("message", async (message) => {
         if(user_pass === process.env.PASS){
           const report = require('./data/info/report.json')
           message.channel.send(report)
-        }
+        }else{message.channel.send('WRONG PASS')}
       }else{
         message.delete
         message.author.send('PLEASE ENTER THE PASSWORD HERE')
