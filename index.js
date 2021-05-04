@@ -223,37 +223,9 @@ client.on("message", async (message) => {
             }
           }
         );
-        const file = require(`./data/language/${value_format}.json`);
-        var transporter = nodemailer.createTransport({
-          service: "gmail",
-          auth: {
-            user: "yanivdouieb2008@gmail.com",
-            pass: process.env.PASSEMAIL,
-          },
-        });
-        var mailOptions = {
-          from: `${message.author.tag}@binaryx.discord`,
-          to: `yanivdouieb2008@gmail.com`,
-          subject: `ERROR IN BINARYX`,
-          text: `An error has been detected on ${value}(${value_format}) ... Please resolve the problem. For more information contact ${message.author.tag} on Discord`,
-        };
-
-        transporter.sendMail(mailOptions, function (err) {
-          if (err) {
-            message.channel.send(
-              new Discord.MessageEmbed()
-                .setTitle("❌ An error occurred ... Please try again later")
-                .setColor("#e32047")
-            );
-            console.log(err);
-          } else {
-            message.channel.send(
-              new Discord.MessageEmbed()
-                .setTitle(`🏆 Thank you for your contribution`)
-                .setColor("#20e3af")
-            );
-          }
-        });
+        let file = editJsonFile(`${__dirname}/data/info/report.json`);
+        file.set(`${value_format}.user_report`, `${message.author.tag}`)
+        file.save()
       }
     }
 
