@@ -223,14 +223,37 @@ client.on("message", async (message) => {
             }
           }
         );
-        let file = editJsonFile(`${__dirname}/data/info/report.json`);
-        file.set(`${value_format}.user_report`, `${message.author.tag}`)
-        file.save()
-        message.channel.send(
-          new Discord.MessageEmbed()
-            .setTitle(`🏆 Thank you for your contribution`)
-            .setColor("#20e3af")
-        );
+        const file = require(`./data/language/${value_format}.json`);
+        var transporter = nodemailer.createTransport({
+          service: "gmail",
+          auth: {
+            user: "yanivdouieb2008@gmail.com",
+            pass: process.env.PASSEMAIL,
+          },
+        });
+        var mailOptions = {
+          from: `${message.author.tag}@binaryx.discord`,
+          to: `yanivdouieb2008@gmail.com`,
+          subject: `ERROR IN BINARYX`,
+          text: `An error has been detected on ${value}(${value_format}) ... Please resolve the problem. For more information contact ${message.author.tag} on Discord`,
+        };
+
+        transporter.sendMail(mailOptions, function (err) {
+          if (err) {
+            message.channel.send(
+              new Discord.MessageEmbed()
+                .setTitle("❌ An error occurred ... Please try again later")
+                .setColor("#e32047")
+            );
+            console.log(err);
+          } else {
+            message.channel.send(
+              new Discord.MessageEmbed()
+                .setTitle(`🏆 Thank you for your contribution`)
+                .setColor("#20e3af")
+            );
+          }
+        });
       }
     }
 
@@ -273,20 +296,6 @@ client.on("message", async (message) => {
                 .setColor("#e32047")
             );
           })
-      }
-    }
-
-    //ADMIN REPORT
-    if(command === "report_view") {
-      const user_pass = message.content.substr(">report_view ".length);
-      if(message.channel.type === 'dm'){
-        if(user_pass === 'Ya'+'ni'+'v'+'2008'){
-          const report = require('./data/info/report.json')
-          message.channel.send('ok')
-        }else{message.channel.send('WRONG PASS')}
-      }else{
-        message.delete
-        message.author.send('PLEASE ENTER THE PASSWORD HERE')
       }
     }
   }
