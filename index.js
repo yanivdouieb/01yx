@@ -226,6 +226,11 @@ client.on("message", async (message) => {
         let file = editJsonFile(`${__dirname}/data/info/report.json`);
         file.set(`${value_format}.user_report`, `${message.author.tag}`)
         file.save()
+        message.channel.send(
+          new Discord.MessageEmbed()
+            .setTitle(`🏆 Thank you for your contribution`)
+            .setColor("#20e3af")
+        );
       }
     }
 
@@ -268,6 +273,20 @@ client.on("message", async (message) => {
                 .setColor("#e32047")
             );
           })
+      }
+    }
+
+    //ADMIN REPORT
+    if(command === "report_view") {
+      const user_pass = message.content.substr(">report_view ".length);
+      if(message.channel.type === 'dm'){
+        if(user_pass === process.env.PASS){
+          const report = require('./data/info/report.json')
+          message.channel.send(report)
+        }
+      }else{
+        message.delete
+        message.author.send('PLEASE ENTER THE PASSWORD HERE')
       }
     }
   }
