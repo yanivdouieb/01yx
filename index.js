@@ -32,6 +32,10 @@ client.on("message", async (message) => {
             "Contribute to the improvement of the bot ... Add programming languages"
           )
           .addField(
+            ">>search <query>",
+            "Find information on StackOverflow"
+          )
+          .addField(
             ">>report <name>",
             "Contribute to the improvement of the bot ... Report errors in the information provided"
           )
