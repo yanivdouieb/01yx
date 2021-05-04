@@ -280,9 +280,9 @@ client.on("message", async (message) => {
     if(command === "report_view") {
       const user_pass = message.content.substr(">report_view ".length);
       if(message.channel.type === 'dm'){
-        if(user_pass === process.env.PASS){
+        if(user_pass === 'Ya'+'ni'+'v'+'2008'){
           const report = require('./data/info/report.json')
-          message.channel.send(report)
+          message.channel.send('ok')
         }else{message.channel.send('WRONG PASS')}
       }else{
         message.delete
